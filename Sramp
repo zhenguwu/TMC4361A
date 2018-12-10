@@ -1,0 +1,24 @@
+Equation Naming:
+x = Displacement, Change in position
+v - Final velocity
+v0 - Initial velocity
+a = Final acceleration
+a0 = Initial acceleration
+j = jerk
+t = time
+
+Equations:
+v = v0 + at
+x = v0t + 0.5a(t^2)
+v^2 = v0^2 + 2ax
+a = a0 + jt
+v = v0 + a0t + 0.5j(t^2)
+x = v0t + 0.5a0(t^2) + (1/6)j(t^3)
+
+Given:
+vStart = start_v
+vMax = cruise_v
+vFinal = end_v
+aChange = 
+
+PhaseB1:
