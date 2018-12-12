@@ -8,33 +8,61 @@ j = jerk
 t = time
 
 Equations:
-v = v0 + at
-x = v0t + 0.5a(t^2)
-v^2 = v0^2 + 2ax
-a = a0 + jt
-v = v0 + a0t + 0.5j(t^2)
-x = v0t + 0.5a0(t^2) + (1/6)j(t^3)
+1) v = v0 + at
+2) x = v0t + 0.5a(t^2)
+3) v^2 = v0^2 + 2ax
+4) a = a0 + jt
+5) v = v0 + a0t + 0.5j(t^2)
+6) x = v0t + 0.5a0(t^2) + (1/6)j(t^3)
 
 Configurable:
-AMAX = AMAX
+aMax (Max acceleration)
+j1, j2, j3, j4 (Jerk)
+
+Given(renaming for convenience):
+vStart = start_v (These values are passed into set_junction's parameter)
+vMax = cruise_v
+vFinal = end_v
+aChange = accel_r (Calculated from GRBL cornering alg) 
+a = aMax * accel_r 
+
+Sent to motion controller:
+ASTART = vStart
+VMAX = vMax
+DFINAL = vFinal
+AMAX = a
+DMAX = a
 BOW1 = j1
 BOW2 = j2
 BOW3 = j3
 BOW4 = j4
 
-Given:
-vStart = start_v
-vMax = cruise_v
-vFinal = end_v
-aChange = accel_r (calculated from 
-a = AMAX * accel_r
-
-PhaseB1:
+To keep equations clean: B1 = 1, B12 = 2, B2 = 3, B23 = 4, B3 = 5, B34 = 6, B4 = 7;
+PhaseB1(1):
 t1 = a / j1
-v1 = vStart + 0.5j(t1^2)
-d1 = vStart(t) + (1/6)j1(t1^3)
+v1 = vStart + 0.5(j)(t1^2)
+d1 = vStart(t) + (1/6)(j1)(t1^3)
 
-PhaseB12 (Calculated from PhaseB1 and PhaseB2):
-a/j2
+PhaseB12(2) - (Calculated from PhaseB1 and PhaseB2):
+t2 = (v3 - v1) / a
+s2 = (v1)(t2) + 0.5(a)(t2^2)
 
-PhaseB2
+PhaseB2(3):
+t3 = a / j2
+v3 = vMax + 0.5(j2)(t3^2) - a(t3) *
+d3 = (v3)(t3) + 0.5(a)(t3^2) - (1/3)(j2)(t3^3) **
+
+
+Derivations:
+
+* Substitute equation 4 --> 5, replaces a0(unknown)
+4) a = a0 + (j2)(t3) --> a0 = a - (j2)(t3)
+5) vMax = v3 + (a0)(t3) + 0.5(j2)(t3^2) --> v3 = vMax - (a0)(t3) - 0.5(j2)(t3^2)
+Substitute) v3 = vMax - (a - (j2)(t3))(t3) - 0.5(j2)(t3^2) --> v3 = vMax - a(t3) + 0.5(j2)(t3^2)
+
+** Substitute equation 4 --> 6, replaces a0(unknown)
+4) a = a0 + (j2)(t3) --> a0 = a - (j2)(t3)
+6) d3 = (v3)(t3) + 0.5(a0)(t3^2) + (1/6)(j2)(t3^3)
+Substitute) d3 = (v3)(t3) + 0.5(a-(j2)(t3))(t3^2) + (1/6)(j2)(t3^3) --> d3 = (v3)(t3) + 0.5(a)(t3^2) - (1/3)(j2)(t3^3)
+NOTE TRINAMIC HAD: d3 = (v3)(t3) + 0.5(a)(t3^2) - (1/6)(j2)(t3^3), but -0.5 + (1/6) = -(2/6) = -(1/3) not -(1/6) 
+
