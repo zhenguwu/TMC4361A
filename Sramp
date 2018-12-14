@@ -65,8 +65,8 @@ t5 = a / j3
 v5 = vMax - 0.5(j3)(t5^2)
 d5 = (vMax)(t5) - (1/6)(j3)(t5^3)
 
-PhaseB34(6):
-t6 =
+PhaseB34(6) - (Calculated from PhaseB3 and PhaseB4):
+t6 = (v7 - v5) / a
 d6 = 
 
 
