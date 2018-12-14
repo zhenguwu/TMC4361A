@@ -1,4 +1,3 @@
-
 See S-shaped_ramping.png for a diagram
 
 Equation Naming:
@@ -60,6 +59,8 @@ PhaseB23(4) - (Calculated after all other phases):
 t4 = d4 / vMax
 d4 = d - d1 - d2 - d3 - d5 - d6 - d7
 
+Note: acceleration is technically negative in the phases below
+
 PhaseB3(5):
 t5 = a / j3
 v5 = vMax - 0.5(j3)(t5^2)
@@ -67,11 +68,11 @@ d5 = (vMax)(t5) - (1/6)(j3)(t5^3)
 
 PhaseB34(6) - (Calculated from PhaseB3 and PhaseB4):
 t6 = (v7 - v5) / a
-d6 = 
+d6 = (v5)(t6) - 0.5(a)(t6^2)
 
 
 PhaseB4(7):
-t7 = 
+t7 = a / j4
 v7 = 
 d7 = 
 
