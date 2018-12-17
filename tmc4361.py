@@ -1,0 +1,23 @@
+import bus
+
+REGW_RESET = 0xCF 
+REGW_FILTER_START = 0x83
+REGW_FILTER_ENCODER = 0x84
+REGW_RAMPMODE = 0xA0
+REGW_XTARGET = 0xB7
+REGR_XTARGET = 0x37
+#REGW_VSTART =
+REGW_VMAX = 0xA4
+#REGW_VFINAL =
+REGW_AMAX = 0xA8
+REGW_DMAX = 0xA9
+REGW_BOW1 = 0xAD
+REGW_BOW2 = 0xAE
+REGW_BOW3 = 0xAF
+REGW_BOW4 = 0xB0
+REGW_MS = 0x8A
+
+class TMC4361:
+	def __init(self, config):
+		self.printer = config.get_printer()
+		self.spi = bus.MCU_SPI_from
