@@ -45,9 +45,9 @@ BOW4 = j4
 
 To keep equations clean: Phase B1 = 1, B12 = 2, B2 = 3, B23 = 4, B3 = 5, B34 = 6, B4 = 7 <br />
 PhaseB1(1):<br />
-<img src="/tex/6934d9fcf2d9c6885c30ba6e5541042c.svg?invert_in_darkmode&sanitize=true" align=middle width=49.85781899999999pt height=22.853275500000024pt/><br />
+<img src="/tex/5b809e1e808a17451e0f4e404e69a8a9.svg?invert_in_darkmode&sanitize=true" align=middle width=49.055961899999986pt height=22.853275500000024pt/><br />
 <img src="/tex/55675c0edd6d21edaa0385e683ece179.svg?invert_in_darkmode&sanitize=true" align=middle width=142.50114944999999pt height=27.77565449999998pt/><br />
-<img src="/tex/10256491eb556f40f73b433723b13fba.svg?invert_in_darkmode&sanitize=true" align=middle width=156.39960434999998pt height=27.77565449999998pt/>
+<img src="/tex/db4bfff1b8ca291a3b15d0d23325dc37.svg?invert_in_darkmode&sanitize=true" align=middle width=169.18503689999997pt height=27.77565449999998pt/>
 
 PhaseB12(2) - (Calculated from PhaseB1 and PhaseB2):<br />
 <img src="/tex/670209ebf51c450f870bcf7efa0addeb.svg?invert_in_darkmode&sanitize=true" align=middle width=73.45679714999999pt height=27.7259796pt/><br />
@@ -67,16 +67,16 @@ Note: acceleration is technically negative in the phases below
 PhaseB3(5):<br />
 <img src="/tex/c31c1df65f597f3305016fbcc54653a4.svg?invert_in_darkmode&sanitize=true" align=middle width=49.055961899999986pt height=22.853275500000024pt/><br />
 <img src="/tex/a4cf951d5c1b3b355f35180342dc7359.svg?invert_in_darkmode&sanitize=true" align=middle width=138.8633202pt height=27.77565449999998pt/><br />
-<img src="/tex/5b060850ea07341691fc1853528ea132.svg?invert_in_darkmode&sanitize=true" align=middle width=153.60652394999997pt height=27.77565449999998pt/>
+<img src="/tex/3f4350c40af2e48f32bd8d200503fc61.svg?invert_in_darkmode&sanitize=true" align=middle width=165.54720764999996pt height=27.77565449999998pt/>
 
 PhaseB34(6) - (Calculated from PhaseB3 and PhaseB4):<br />
 <img src="/tex/e463a3fe1f5eb78d0dffcd16766f3977.svg?invert_in_darkmode&sanitize=true" align=middle width=73.45679714999999pt height=27.7259796pt/><br />
-<img src="/tex/d44c704e3bca217736eeea1c82cab67b.svg?invert_in_darkmode&sanitize=true" align=middle width=119.11261394999998pt height=27.77565449999998pt/>
+<img src="/tex/558599a8729fa3548a7e39ee7c40fd54.svg?invert_in_darkmode&sanitize=true" align=middle width=118.26786509999998pt height=27.77565449999998pt/>
 
 PhaseB4(7):<br />
 <img src="/tex/e32928b3852db1b64561c37513951975.svg?invert_in_darkmode&sanitize=true" align=middle width=49.055961899999986pt height=22.853275500000024pt/><br />
 <img src="/tex/ce7f8f2359d8fd63854ffc0e38f60b06.svg?invert_in_darkmode&sanitize=true" align=middle width=187.43188859999998pt height=27.77565449999998pt/> *** <br />
-<img src="/tex/843a2bda8fd5f12f380d61b8f9bbe42e.svg?invert_in_darkmode&sanitize=true" align=middle width=214.15929645000003pt height=27.77565449999998pt/> ****
+<img src="/tex/de3d2cfe7762620000b42cdb791e1fcb.svg?invert_in_darkmode&sanitize=true" align=middle width=176.31124169999998pt height=27.77565449999998pt/> ****
 
 
 Derivations:
