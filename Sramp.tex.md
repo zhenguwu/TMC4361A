@@ -1,80 +1,82 @@
 See S-shaped Ramping.png for a diagram
 
 Equation Naming:
-$d$ = Displacement, Change in position
-$v$ - Final velocity
-$v0$ - Initial velocity
-$a$ = Final acceleration
-$a0$ = Initial acceleration
-$j$ = jerk
+
+$d$ = Displacement, Change in position<br />
+$v$ - Final velocity<br />
+$v0$ - Initial velocity<br />
+$a$ = Final acceleration<br />
+$a0$ = Initial acceleration<br />
+$j$ = jerk<br />
 $t$ = time
 
 Equations:
-1) $v = v0 + at$
+1) $v = v_0 + at$
 2) $x = v_0t + \frac{1}{2}at^2$
 3) $v^2 = v_0^2 + 2ad$
 4) $a = a_0 + jt$
 5) $v = v_0 + a_0t + \frac{1}{2}jt^2$
 6) $d = v_0t + \frac{1}{2}a_0t^2 + \frac{1}{6}jt^3$
 
-Configurable:
-aMax (Max acceleration)
+Configurable:<br />
+aMax (Max acceleration)<br />
 j1, j2, j3, j4 (Jerk)
 
-Given(renaming for convenience):
-vStart = start_v (These values are passed into set_junction's parameter)
-vMax = cruise_v
-vFinal = end_v
-aChange = accel_r (Calculated from GRBL cornering alg) 
-a = aMax * accel_r
+Given(renaming for convenience):<br />
+vStart = start_v (These values are passed into set_junction's parameter)<br />
+vMax = cruise_v<br />
+vFinal = end_v<br />
+aChange = accel_r (Calculated from GRBL cornering alg) <br />
+a = aMax * accel_r<br />
 d = total_distance(Needs to be confirmed)
 
-Sent to motion controller:
-ASTART = vStart
-VMAX = vMax
-DFINAL = vFinal
-AMAX = a
-DMAX = a
-BOW1 = j1
-BOW2 = j2
-BOW3 = j3
+Sent to motion controller:<br />
+XTARGET = d <br />
+ASTART = vStart<br />
+VMAX = vMax<br />
+DFINAL = vFinal<br />
+AMAX = a<br />
+DMAX = a<br />
+BOW1 = j1<br />
+BOW2 = j2<br />
+BOW3 = j3<br />
 BOW4 = j4
 
 
-To keep equations clean: B1 = 1, B12 = 2, B2 = 3, B23 = 4, B3 = 5, B34 = 6, B4 = 7;
-PhaseB1(1):
-t1 = a / j1
-v1 = vStart + 0.5(j1)(t1^2)
-d1 = (vStart)(t1) + (1/6)(j1)(t1^3)
+To keep equations clean: Phase B1 = 1, B12 = 2, B2 = 3, B23 = 4, B3 = 5, B34 = 6, B4 = 7 <br />
+PhaseB1(1):<br />
+$t_1 = \frac{a}{j1}$<br />
+$v_1 = vStart + \frac{1}{2}j_1t_1^2$<br />
+$d_1 = vStartt_1 + \frac{1}{6}j_1t_1^3$
 
-PhaseB12(2) - (Calculated from PhaseB1 and PhaseB2):
-t2 = (v3 - v1) / a
-d2 = (v1)(t2) + 0.5(a)(t2^2)
+PhaseB12(2) - (Calculated from PhaseB1 and PhaseB2):<br />
+$t_2 = \frac{v_3 - v_1}{a}$<br />
+$d_2 = v_1t_2 + \frac{1}{2}at_2^2$
 
-PhaseB2(3):
-t3 = a / j2
-v3 = vMax + 0.5(j2)(t3^2) - a(t3) *
-d3 = (v3)(t3) + 0.5(a)(t3^2) - (1/3)(j2)(t3^3) **
+PhaseB2(3):<br />
+$t_3 = \frac{a}{j_2}$<br />
+$v_3 = vMax + \frac{1}{2}j_2t_3^2 - at_3$ * <br />
+$d_3 = v_3t_3 + \frac{1}{2}at_3^2 - \frac{1}{3}j_2t_3^3$ **
 
-PhaseB23(4) - (Calculated after all other phases):
-t4 = d4 / vMax
-d4 = d - d1 - d2 - d3 - d5 - d6 - d7
+PhaseB23(4) - (Calculated after all other phases):<br />
+$t_4 = \frac{d_4}{vMax}$<br />
+$d_4 = d - d_1 - d_2 - d_3 - d_5 - d_6 - d_7$ 
 
 Note: acceleration is technically negative in the phases below
 
-PhaseB3(5):
-t5 = a / j3
-v5 = vMax - 0.5(j3)(t5^2)
-d5 = (vMax)(t5) - (1/6)(j3)(t5^3)
+PhaseB3(5):<br />
+$t_5 = \frac{a}{j_3}$<br />
+$v_5 = vMax - \frac{1}{2}j_3t_5^2$<br />
+$d5 = vMaxt_5 - \frac{1}{6}j_3t_5^3$
 
-PhaseB34(6) - (Calculated from PhaseB3 and PhaseB4):
-t6 = (v7 - v5) / a
-d6 = (v5)(t6) - 0.5(a)(t6^2)
+PhaseB34(6) - (Calculated from PhaseB3 and PhaseB4):<br />
+$t_6 = \frac{v_7 - v_5}{a}$<br />
+$d6 = v_5t_6 - \frac{1}{2}at_6^2$
 
-PhaseB4(7):
-t7 = a / j4
-v7 = vFinal + (a)(t7) - 0.5(j4)(t7^2) ***
-d7 = d7 = (v7)(t7) - 0.5(a)(t7^2) + (1/3)(j4)(t7^3) ****
+PhaseB4(7):<br />
+$t_7 = \frac{a}{j_4}$<br />
+$v_7 = vFinal + at_7 - \frac{1}{2}j_4t_7^2$ *** <br />
+$d_7 = d_7 = v_7t_7 - \frac{1}{2}at_7^2 + \frac{1}{3}j_4t_7^3$ ****
 
 
 Derivations:
