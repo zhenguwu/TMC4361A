@@ -45,9 +45,9 @@ BOW4 = j4
 
 To keep equations clean: Phase B1 = 1, B12 = 2, B2 = 3, B23 = 4, B3 = 5, B34 = 6, B4 = 7 <br />
 PhaseB1(1):<br />
-$t_1 = \frac{a}{j1}$<br />
+$t_1 = \frac{a}{j_1}$<br />
 $v_1 = vStart + \frac{1}{2}j_1t_1^2$<br />
-$d_1 = vStartt_1 + \frac{1}{6}j_1t_1^3$
+$d_1 = vStart(t_1) + \frac{1}{6}j_1t_1^3$
 
 PhaseB12(2) - (Calculated from PhaseB1 and PhaseB2):<br />
 $t_2 = \frac{v_3 - v_1}{a}$<br />
@@ -67,16 +67,16 @@ Note: acceleration is technically negative in the phases below
 PhaseB3(5):<br />
 $t_5 = \frac{a}{j_3}$<br />
 $v_5 = vMax - \frac{1}{2}j_3t_5^2$<br />
-$d5 = vMaxt_5 - \frac{1}{6}j_3t_5^3$
+$d_5 = vMax(t_5) - \frac{1}{6}j_3t_5^3$
 
 PhaseB34(6) - (Calculated from PhaseB3 and PhaseB4):<br />
 $t_6 = \frac{v_7 - v_5}{a}$<br />
-$d6 = v_5t_6 - \frac{1}{2}at_6^2$
+$d_6 = v_5t_6 - \frac{1}{2}at_6^2$
 
 PhaseB4(7):<br />
 $t_7 = \frac{a}{j_4}$<br />
 $v_7 = vFinal + at_7 - \frac{1}{2}j_4t_7^2$ *** <br />
-$d_7 = d_7 = v_7t_7 - \frac{1}{2}at_7^2 + \frac{1}{3}j_4t_7^3$ ****
+$d_7 = v_7t_7 - \frac{1}{2}at_7^2 + \frac{1}{3}j_4t_7^3$ ****
 
 
 Derivations:
