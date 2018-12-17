@@ -31,11 +31,11 @@ class TMC4361:
 		self.bow3 = config.getint("bow3", 90000)
 		self.bow4 = config.getint("bow4", 90000)
 		self.enc_res = config.getint("encoder_resolution", 4096)
-		set_register("REGW_RESET", 			0x52535400)
-		set_register("REGW_FILTER_START", 	0x00540022)
+		set_register("REGW_RESET", 0x52535400)
+		set_register("REGW_FILTER_START", 0x00540022)
 		set_register("REGW_FILTER_ENCODER", 0x8440000d)
-		set_register("REGW_RAMPMODE", 		0x00000006)
-		set_register("REGW_MS", 			0x00000000)
+		set_register("REGW_RAMPMODE", 0x00000006)
+		set_register("REGW_MS", 0x00000000)
 		set_register()
 
 
