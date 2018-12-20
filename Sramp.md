@@ -42,12 +42,14 @@ BOW2 = j2<br />
 BOW3 = j3<br />
 BOW4 = j4
 
+To keep equations clean: Phase B1 = 1, B12 = 2, B2 = 3, B23 = 4, B3 = 5, B34 = 6, B4 = 7
 
-To keep equations clean: Phase B1 = 1, B12 = 2, B2 = 3, B23 = 4, B3 = 5, B34 = 6, B4 = 7 <br />
+Following equations apply when vStart = 0:
+
 PhaseB1(1):<br />
 <img src="/tex/5b809e1e808a17451e0f4e404e69a8a9.svg?invert_in_darkmode&sanitize=true" align=middle width=49.055961899999986pt height=22.853275500000024pt/><br />
-<img src="/tex/55675c0edd6d21edaa0385e683ece179.svg?invert_in_darkmode&sanitize=true" align=middle width=142.50114944999999pt height=27.77565449999998pt/><br />
-<img src="/tex/db4bfff1b8ca291a3b15d0d23325dc37.svg?invert_in_darkmode&sanitize=true" align=middle width=169.18503689999997pt height=27.77565449999998pt/>
+<img src="/tex/24bc5f3374e089f650fa2aae406f3dbf.svg?invert_in_darkmode&sanitize=true" align=middle width=74.39042984999999pt height=27.77565449999998pt/><br />
+<img src="/tex/9e86a4f95e51fa714c9320b6f21b8513.svg?invert_in_darkmode&sanitize=true" align=middle width=74.9783265pt height=27.77565449999998pt/>
 
 PhaseB12(2) - (Calculated from PhaseB1 and PhaseB2):<br />
 <img src="/tex/670209ebf51c450f870bcf7efa0addeb.svg?invert_in_darkmode&sanitize=true" align=middle width=73.45679714999999pt height=27.7259796pt/><br />
@@ -55,14 +57,13 @@ PhaseB12(2) - (Calculated from PhaseB1 and PhaseB2):<br />
 
 PhaseB2(3):<br />
 <img src="/tex/80dfb8056c2407d31f3e2c653d8a3c2a.svg?invert_in_darkmode&sanitize=true" align=middle width=49.055961899999986pt height=22.853275500000024pt/><br />
-<img src="/tex/a2dfd77816b6e4a60d677aabdcda2055.svg?invert_in_darkmode&sanitize=true" align=middle width=180.9542229pt height=27.77565449999998pt/> * <br />
-<img src="/tex/c58e8c9cec06c6d379463d145fe96b25.svg?invert_in_darkmode&sanitize=true" align=middle width=176.31124169999998pt height=27.77565449999998pt/> **
+<img src="/tex/a2dfd77816b6e4a60d677aabdcda2055.svg?invert_in_darkmode&sanitize=true" align=middle width=180.9542229pt height=27.77565449999998pt/> <br />
+<img src="/tex/60d32b523a322b03caadafa84862b94c.svg?invert_in_darkmode&sanitize=true" align=middle width=176.31124169999998pt height=27.77565449999998pt/>
 
-PhaseB23(4) - (Calculated after all other phases):<br />
-<img src="/tex/caa0b3b6e90ec71714197dc855e51734.svg?invert_in_darkmode&sanitize=true" align=middle width=72.54323504999999pt height=29.46111299999998pt/><br />
-<img src="/tex/1536e2e59ef13e4a610847a2e254332f.svg?invert_in_darkmode&sanitize=true" align=middle width=261.71179155pt height=22.831056599999986pt/> 
+If vStart =/= 0, PhaseB1 is skipped and goes directly to B12 with <img src="/tex/25a24c32caf24a99d3c697cd285cf31a.svg?invert_in_darkmode&sanitize=true" align=middle width=85.27968569999999pt height=22.465723500000017pt/>
 
-Note: acceleration is technically negative in the phases below
+
+Following equations apply when vFinal = 0:
 
 PhaseB3(5):<br />
 <img src="/tex/c31c1df65f597f3305016fbcc54653a4.svg?invert_in_darkmode&sanitize=true" align=middle width=49.055961899999986pt height=22.853275500000024pt/><br />
@@ -75,32 +76,12 @@ PhaseB34(6) - (Calculated from PhaseB3 and PhaseB4):<br />
 
 PhaseB4(7):<br />
 <img src="/tex/e32928b3852db1b64561c37513951975.svg?invert_in_darkmode&sanitize=true" align=middle width=49.055961899999986pt height=22.853275500000024pt/><br />
-<img src="/tex/ce7f8f2359d8fd63854ffc0e38f60b06.svg?invert_in_darkmode&sanitize=true" align=middle width=187.43188859999998pt height=27.77565449999998pt/> *** <br />
-<img src="/tex/de3d2cfe7762620000b42cdb791e1fcb.svg?invert_in_darkmode&sanitize=true" align=middle width=176.31124169999998pt height=27.77565449999998pt/> ****
+<img src="/tex/86d3584858020c16acc5371afebf62b3.svg?invert_in_darkmode&sanitize=true" align=middle width=116.48133254999999pt height=27.77565449999998pt/> <br />
+<img src="/tex/33c49d1a632b2f53e7796b2cb7b23a7a.svg?invert_in_darkmode&sanitize=true" align=middle width=176.31124169999998pt height=27.77565449999998pt/>
+
+If vFinal =/= 0, PhaseB4 is skipped and PhaseB34 is solved with <img src="/tex/b2fad38132a280ec360d882485304c10.svg?invert_in_darkmode&sanitize=true" align=middle width=88.11952874999999pt height=22.831056599999986pt/>
 
 
-Derivations:
-
-* Substitute equation 4 --> 5, replaces a0(unknown)
-4) a = a0 + (j2)(t3) --> a0 = a - (j2)(t3)
-5) vMax = v3 + (a0)(t3) + 0.5(j2)(t3^2) --> v3 = vMax - (a0)(t3) - 0.5(j2)(t3^2)
-Substitute) v3 = vMax - (a - (j2)(t3))(t3) - 0.5(j2)(t3^2) --> v3 = vMax - a(t3) + 0.5(j2)(t3^2)
-
-** Substitute equation 4 --> 6
-4) a = a0 + (j2)(t3) --> a0 = a - (j2)(t3)
-6) d3 = (v3)(t3) + 0.5(a0)(t3^2) + (1/6)(j2)(t3^3)
-Substitute) d3 = (v3)(t3) + 0.5(a - (j2)(t3))(t3^2) + (1/6)(j2)(t3^3) --> d3 = (v3)(t3) + 0.5(a)(t3^2) - (1/3)(j2)(t3^3)
-NOTE TRINAMIC HAD: d3 = (v3)(t3) + 0.5(a)(t3^2) - (1/6)(j2)(t3^3), but -0.5 + (1/6) = -(2/6) = -(1/3) not -(1/6) 
-
-*** Substitute equation 4 --> 5
-4) a = a0 + (j4)(t7) --> a0 = a - (j4)(t7)
-5) vFinal = v7 - (a0)(t7) - 0.5(j4)(t7^2) --> v7 = vFinal + (a0)(t7) + 0.5(j4)(t7^2)
-Substitute) v7 = vFinal + (a - (j4)(t7))(t7) + 0.5(j4)(t7^2) --> v7 = vFinal + (a)(t7) - 0.5(j4)(t7^2)
-
-**** Substitute equation 4 --> 6
-4) a = a0 + (j4)(t7) --> a0 = a - (j4)(t7)
-5) d7 = (v7)(t7) - 0.5(a0)(t7^2) - (1/6)(j4)(t7^3)
-Substitute) d7 = (v7)(t7) - 0.5(a - (j4)(t7))(t7^2) - (1/6)(j4)(t7^2) --> d7 = (v7)(t7) - 0.5(a)(t7^2) + (1/3)(j4)(t7^3)
-
-NOTE TRINAMIC HAD: d3 = (v3)(t3) + 0.5(a)(t3^2) - (1/6)(j2)(t3^3), but -0.5 + (1/6) = -(2/6) = -(1/3) not -(1/6)
-and d7 = (v7)(t7) - 0.5(a)(t7^2) + (1/6)(j4)(t7^3), but 0.5 - (1/6) = (1/3) not (1/6)
+PhaseB23(4) - (Calculated after all other phases):<br />
+<img src="/tex/caa0b3b6e90ec71714197dc855e51734.svg?invert_in_darkmode&sanitize=true" align=middle width=72.54323504999999pt height=29.46111299999998pt/><br />
+<img src="/tex/1536e2e59ef13e4a610847a2e254332f.svg?invert_in_darkmode&sanitize=true" align=middle width=261.71179155pt height=22.831056599999986pt/> 
