@@ -42,12 +42,14 @@ BOW2 = j2<br />
 BOW3 = j3<br />
 BOW4 = j4
 
+To keep equations clean: Phase B1 = 1, B12 = 2, B2 = 3, B23 = 4, B3 = 5, B34 = 6, B4 = 7
 
-To keep equations clean: Phase B1 = 1, B12 = 2, B2 = 3, B23 = 4, B3 = 5, B34 = 6, B4 = 7 <br />
+Following equations apply when vStart = 0:
+
 PhaseB1(1):<br />
 $t_1 = \frac{a}{j_1}$<br />
-$v_1 = vStart + \frac{1}{2}j_1t_1^2$<br />
-$d_1 = vStart(t_1) + \frac{1}{6}j_1t_1^3$
+$v_1 = \frac{1}{2}j_1t_1^2$<br />
+$d_1 = \frac{1}{6}j_1t_1^3$
 
 PhaseB12(2) - (Calculated from PhaseB1 and PhaseB2):<br />
 $t_2 = \frac{v_3 - v_1}{a}$<br />
@@ -55,14 +57,13 @@ $d_2 = v_1t_2 + \frac{1}{2}at_2^2$
 
 PhaseB2(3):<br />
 $t_3 = \frac{a}{j_2}$<br />
-$v_3 = vMax + \frac{1}{2}j_2t_3^2 - at_3$ * <br />
-$d_3 = v_3t_3 + \frac{1}{2}at_3^2 - \frac{1}{3}j_2t_3^3$ **
+$v_3 = vMax + \frac{1}{2}j_2t_3^2 - at_3$ <br />
+$d_3 = v_3t_3 + \frac{1}{2}at_3^2 - \frac{1}{6}j_2t_3^3$
 
-PhaseB23(4) - (Calculated after all other phases):<br />
-$t_4 = \frac{d_4}{vMax}$<br />
-$d_4 = d - d_1 - d_2 - d_3 - d_5 - d_6 - d_7$ 
+If vStart =/= 0, PhaseB1 is skipped and goes directly to B12 with $v_1 = vStart$
 
-Note: acceleration is technically negative in the phases below
+
+Following equations apply when vFinal = 0:
 
 PhaseB3(5):<br />
 $t_5 = \frac{a}{j_3}$<br />
@@ -75,32 +76,12 @@ $d_6 = v_5t_6 - \frac{1}{2}at_6^2$
 
 PhaseB4(7):<br />
 $t_7 = \frac{a}{j_4}$<br />
-$v_7 = vFinal + at_7 - \frac{1}{2}j_4t_7^2$ *** <br />
-$d_7 = v_7t_7 - \frac{1}{2}at_7^2 + \frac{1}{3}j_4t_7^3$ ****
+$v_7 = at_7 - \frac{1}{2}j_4t_7^2$ <br />
+$d_7 = v_7t_7 - \frac{1}{2}at_7^2 + \frac{1}{6}j_4t_7^3$
+
+If vFinal =/= 0, PhaseB4 is skipped and PhaseB34 is solved with $v_7 = vFinal$
 
 
-Derivations:
-
-* Substitute equation 4 --> 5, replaces a0(unknown)
-4) a = a0 + (j2)(t3) --> a0 = a - (j2)(t3)
-5) vMax = v3 + (a0)(t3) + 0.5(j2)(t3^2) --> v3 = vMax - (a0)(t3) - 0.5(j2)(t3^2)
-Substitute) v3 = vMax - (a - (j2)(t3))(t3) - 0.5(j2)(t3^2) --> v3 = vMax - a(t3) + 0.5(j2)(t3^2)
-
-** Substitute equation 4 --> 6
-4) a = a0 + (j2)(t3) --> a0 = a - (j2)(t3)
-6) d3 = (v3)(t3) + 0.5(a0)(t3^2) + (1/6)(j2)(t3^3)
-Substitute) d3 = (v3)(t3) + 0.5(a - (j2)(t3))(t3^2) + (1/6)(j2)(t3^3) --> d3 = (v3)(t3) + 0.5(a)(t3^2) - (1/3)(j2)(t3^3)
-NOTE TRINAMIC HAD: d3 = (v3)(t3) + 0.5(a)(t3^2) - (1/6)(j2)(t3^3), but -0.5 + (1/6) = -(2/6) = -(1/3) not -(1/6) 
-
-*** Substitute equation 4 --> 5
-4) a = a0 + (j4)(t7) --> a0 = a - (j4)(t7)
-5) vFinal = v7 - (a0)(t7) - 0.5(j4)(t7^2) --> v7 = vFinal + (a0)(t7) + 0.5(j4)(t7^2)
-Substitute) v7 = vFinal + (a - (j4)(t7))(t7) + 0.5(j4)(t7^2) --> v7 = vFinal + (a)(t7) - 0.5(j4)(t7^2)
-
-**** Substitute equation 4 --> 6
-4) a = a0 + (j4)(t7) --> a0 = a - (j4)(t7)
-5) d7 = (v7)(t7) - 0.5(a0)(t7^2) - (1/6)(j4)(t7^3)
-Substitute) d7 = (v7)(t7) - 0.5(a - (j4)(t7))(t7^2) - (1/6)(j4)(t7^2) --> d7 = (v7)(t7) - 0.5(a)(t7^2) + (1/3)(j4)(t7^3)
-
-NOTE TRINAMIC HAD: d3 = (v3)(t3) + 0.5(a)(t3^2) - (1/6)(j2)(t3^3), but -0.5 + (1/6) = -(2/6) = -(1/3) not -(1/6)
-and d7 = (v7)(t7) - 0.5(a)(t7^2) + (1/6)(j4)(t7^3), but 0.5 - (1/6) = (1/3) not (1/6)
+PhaseB23(4) - (Calculated after all other phases):<br />
+$t_4 = \frac{d_4}{vMax}$<br />
+$d_4 = d - d_1 - d_2 - d_3 - d_5 - d_6 - d_7$ 
