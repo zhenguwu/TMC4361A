@@ -71,7 +71,7 @@ $v_5 = vMax - \frac{1}{2}j_3t_5^2$<br />
 $d_5 = vMax(t_5) - \frac{1}{6}j_3t_5^3$
 
 PhaseB34(6) - (Calculated from PhaseB3 and PhaseB4):<br />
-$t_6 = \frac{v_7 - v_5}{a}$<br />
+$t_6 = \frac{v_5 - v_7}{a}$<br />
 $d_6 = v_5t_6 - \frac{1}{2}at_6^2$
 
 PhaseB4(7):<br />
