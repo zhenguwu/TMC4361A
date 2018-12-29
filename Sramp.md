@@ -71,7 +71,7 @@ PhaseB3(5):<br />
 <img src="/tex/3f4350c40af2e48f32bd8d200503fc61.svg?invert_in_darkmode&sanitize=true" align=middle width=165.54720764999996pt height=27.77565449999998pt/>
 
 PhaseB34(6) - (Calculated from PhaseB3 and PhaseB4):<br />
-<img src="/tex/e463a3fe1f5eb78d0dffcd16766f3977.svg?invert_in_darkmode&sanitize=true" align=middle width=73.45679714999999pt height=27.7259796pt/><br />
+<img src="/tex/3837bdd77e19fcdcc2f3e480e254b97f.svg?invert_in_darkmode&sanitize=true" align=middle width=73.45679714999999pt height=27.7259796pt/><br />
 <img src="/tex/558599a8729fa3548a7e39ee7c40fd54.svg?invert_in_darkmode&sanitize=true" align=middle width=118.26786509999998pt height=27.77565449999998pt/>
 
 PhaseB4(7):<br />
