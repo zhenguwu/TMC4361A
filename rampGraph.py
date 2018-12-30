@@ -1,3 +1,4 @@
+# Python3
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -92,7 +93,7 @@ def phase():
     m1, c1 = lineEq((time1, vel1), (time1 + time2, vel3))
     m2, c2 = lineEq((time1 + time2 + time3 + time4 + time5, vel5), (time1 + time2 + time3 + time4 + time5 + time6, vel7))
 
-    #Sorry this is not very efficient
+    # Sorry this is not very efficient
     for time in t:
         if 0 <= time and time < times1:
             v.append(0.5 * jerk1 * time**2)
