@@ -12,7 +12,7 @@ import mcu, homing, chelper, kinematics.extruder
 
 # Class to track each move request
 class Move:
-    def __init__(self, toolhead, start_pos, end_pos, speed, scurve = False):
+    def __init__(self, toolhead, start_pos, end_pos, speed, motion_contr = False):
         self.toolhead = toolhead
         self.start_pos = tuple(start_pos)
         self.end_pos = tuple(end_pos)
@@ -38,9 +38,9 @@ class Move:
         self.max_smoothed_v2 = 0.
         self.smooth_delta_v2 = 2.0 * move_d * toolhead.max_accel_to_decel
         self.set_junction = self._set_junction
-        if scurve:
-            self.set_junction = self._set_junction_scurve
-            self.jerk = scurve
+        if motion_contr:
+            self.motion_contr = motion_contr
+            self.set_junction = _set_junction_motion_contr
     def limit_speed(self, speed, accel):
         speed2 = speed**2
         if speed2 < self.max_cruise_v2:
@@ -95,48 +95,14 @@ class Move:
         self.accel_t = accel_r * self.move_d / ((start_v + cruise_v) * 0.5)
         self.cruise_t = cruise_r * self.move_d / cruise_v
         self.decel_t = decel_r * self.move_d / ((end_v + cruise_v) * 0.5)
-    def _set_junction_scurve(self, start_v2, cruise_v2, end_v2):
+    def _set_junction_motion_contr(self, start_v2, cruise_v2, end_v2):
         self.start_v = start_v = math.sqrt(start_v2)
         self.cruise_v = cruise_v = math.sqrt(cruise_v2)
         self.end_v = end_v = math.sqrt(end_v2)
-        jerk_1, jerk_2, jerk_3, jerk_4 = self.jerk
-        accel = self.accel
-        time = [0, 0, 0, accel/jerk_2, 0, accel/jerk_3, 0, 0]
-        vel_1 = 0
-        vel_3 = cruise_v + 0.5 * jerk_2 * time[3]**2 - accel * time[3]
-        vel_5 = cruise_v - 0.5 * jerk_3 * time[5]**2
-        vel_7 = 0
-        d = [0, 0, 0, vel_3 * time[3] + 0.5 * accel * time[3]**2 - (1/6) * jerk_2 * time[3]**3, 0, cruise_v * time[5] - (1/6) * jerk_3 * time[5]**3, 0, 0]
-        if start_v == 0:
-            # Initial velocity = 0
-            time[1] = accel/jerk_1
-            vel_1 = 0.5 * jerk_1 * time[1]**2
-            d[1] = (1/6) * jerk_1 * time[1]**3
-        else:
-            # Initial velocity =/= 0
-            #time1 = 0  Note: These are not necessary as variables start off as 0, just here for acknowledgement
-            vel_1 = start_v
-            #d1 = 0
-        time[2] = (vel_3  - vel_1) / accel
-        d[2] = vel_1 * time[2] + 0.5 * accel * time[2]**2
-        if end_v == 0:
-            # Final velocity = 0
-            time[7] = accel/jerk_4
-            vel_7 = accel * time[7] - 0.5 * jerk_4 * time[7]**2
-            d[7] = vel_7 * time[7] - 0.5 * accel * time[7]**2 + (1/6) * jerk_4 * time[7]**3
-        else:
-            # Final velocity =/= 0
-            #time7 = 0 
-            vel_7 = end_v
-            #d7 = 0
-        time[6] = (vel_5 - vel_7) / accel
-        d[6] = vel_5 * time[6] - 0.5 * accel * time[6]**2
-        d[4] = self.move_d - d[1] - d[2] - d[3] - d[5] - d[6] - d[7]
-        time[4] = d[4] / cruise_v
-        self.accel_t = time[1] + time[2] + time[3]
-        self.cruise_t = time[4]
-        self.decel_t = time[5] + time[6] + time[7]
-        raise Exception(self.start_v, self.cruise_v, self.end_v, self.accel_t, self.cruise_t, self.decel_t, time, d, vel_1, vel_3, vel_5, vel_7, accel)
+        accel_t, cruise_t, decel_t = self.motion_contr.set_junction(start_v, cruise_v, end_v, self.accel, self.move_d)
+        self.accel_t = accel_t
+        self.cruise_t = cruise_t
+        self.decel_t = decel_t
     def move(self):
         # Generate step times for the move
         next_move_time = self.toolhead.get_next_move_time()
@@ -281,11 +247,12 @@ class ToolHead:
         self.printer.try_load_module(config, "idle_timeout")
         self.printer.try_load_module(config, "statistics")
         tmc4361 = self.printer.lookup_object("tmc4361", False)
+        #tmc5072 = self.printer.lookup_object("tmc5072", False)
         if tmc4361:
-            self.scurve = tmc4361.get_jerk()
-            tmc4361.validate()
+            self.motion_contr = tmc4361
+            tmc4361.validate(self.max_accel)
         else:
-            self.scurve = False
+            self.motion_contr = False
         # Setup iterative solver
         ffi_main, ffi_lib = chelper.get_ffi()
         self.cmove = ffi_main.gc(ffi_lib.move_alloc(), ffi_lib.free)
@@ -296,7 +263,7 @@ class ToolHead:
         kin_name = config.get('kinematics')
         try:
             mod = importlib.import_module('kinematics.' + kin_name)
-            self.kin = mod.load_kinematics(self, config)
+            self.kin = mod.load_kinematics(self, config, self.motion_contr)
         except config.error as e:
             raise
         except self.printer.lookup_object('pins').error as e:
@@ -397,7 +364,7 @@ class ToolHead:
         self.kin.set_position(newpos, homing_axes)
     def move(self, newpos, speed):
         speed = min(speed, self.max_velocity)
-        move = Move(self, self.commanded_pos, newpos, speed, self.scurve)
+        move = Move(self, self.commanded_pos, newpos, speed, self.motion_contr)
         if not move.move_d:
             return
         if move.is_kinematic_move:
